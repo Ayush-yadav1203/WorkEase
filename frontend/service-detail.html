@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Details — WorkEase</title>
+  <style>
+    :root {
+      --bg: #0f1724;
+      --text: #e6eef6;
+      --card: #0b1220;
+      --accent1: #6ee7b7;
+      --accent2: #60a5fa;
+    }
+    [data-theme="light"] {
+      --bg: #f6f9fc;
+      --text: #1a1a1a;
+      --card: #ffffff;
+    }
+    body {
+      font-family: Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .service-banner img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .info {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 16px;
+      margin-top: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    }
+    .info h1 { margin-top: 0; color: var(--accent2); }
+    .pricing {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 1.1em;
+    }
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(90deg, var(--accent2), var(--accent1));
+    }
+    .btn:hover { transform: translateY(-3px); transition: 0.3s; }
+  </style>
+</head>
+<body data-theme="dark">
+  <div class="container">
+    <div class="service-banner">
+      <img src="ac-repair.jpg" alt="AC Repair Service">
+    </div>
+    <div class="info">
+      <h1>AC Repair & Servicing</h1>
+      <p>Keep your air conditioner running smoothly with expert technicians. Includes cleaning, filter check, and cooling efficiency testing.</p>
+      <div class="pricing">
+        <span>⏱ Duration: 2 hours</span>
+        <span>💰 Price: ₹1,499</span>
+      </div>
+      <div class="buttons">
+        <button class="btn" onclick="location.href='profile.html'">View Pro</button>
+        <button class="btn" onclick="location.href='checkout.html'">Book Now</button>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+
+</body>
+</html>

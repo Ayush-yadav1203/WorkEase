@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WorkEase — Home</title>
+  <meta name="description" content="WorkEase — Home services made effortless (Urban Company clone)" />
+  <style>
+  
+    :root {
+      --bg: #0f1724;
+      --text: #e6eef6;
+      --card: #0b1220;
+      --muted: #9aa4b2;
+      --accent1: #6ee7b7;
+      --accent2: #60a5fa;
+      --glass: rgba(255, 255, 255, 0.04);
+    }
+
+    [data-theme="light"] {
+      --bg: #f6f9fc;
+      --text: #1a1a1a;
+      --card: #ffffff;
+      --muted: #4a5568;
+      --accent1: #06b6d4;
+      --accent2: #3b82f6;
+      --glass: rgba(15, 23, 42, 0.03);
+    }
+
+    * { box-sizing: border-box; transition: background 0.4s ease, color 0.4s ease; }
+img {
+  max-width: 100%;
+  height: auto;
+}
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg), #071026);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 28px; }
+
+    header { backdrop-filter: blur(6px); position: sticky; top: 12px; z-index: 50; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 14px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)); box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6); }
+    .brand { display: flex; gap: 12px; align-items: center; }
+    .logo { width: 48px; height: 48px; border-radius: 10px; background: linear-gradient(135deg, var(--accent1), var(--accent2)); display: flex; align-items: center; justify-content: center; font-weight: 700; color: #06243b; }
+    .brand h1 { margin: 0; font-size: 18px; }
+    nav a { color: var(--muted); text-decoration: none; margin-right: 18px; font-size: 15px; }
+    .cta { display: flex; gap: 10px; align-items: center; }
+    .btn { padding: 10px 14px; border-radius: 10px; border: 0; background: linear-gradient(90deg, var(--accent2), var(--accent1)); color: #fff; cursor: pointer; font-weight: 600; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2); }
+    .ghost { background: transparent; border: 1px solid rgba(255, 255, 255, 0.06); padding: 8px 10px; border-radius: 10px; color: var(--muted); cursor: pointer; }
+
+    #detectLocationBtn { background: linear-gradient(90deg, var(--accent1), var(--accent2)); animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(96,165,250,0.5); } 70% { box-shadow: 0 0 0 10px rgba(96,165,250,0); } 100% { box-shadow: 0 0 0 0 rgba(96,165,250,0); } }
+
+    .hero { display: grid; grid-template-columns: 1fr 420px; gap: 28px; align-items: center; margin-top: 28px; }
+    .hero-card { background: var(--card); padding: 28px; border-radius: 16px; box-shadow: 0 12px 40px rgba(2, 6, 23, 0.6); color: var(--text); }
+    .hero h2 { margin: 0 0 6px 0; font-size: 34px; color: var(--text); }
+    .hero p { margin: 0 0 18px 0; color: var(--muted); }
+
+    .search { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .search input { flex: 1; padding: 12px 14px; border-radius: 12px; border: 0; background: var(--glass); color: inherit; }
+    .search select { padding: 10px; border-radius: 12px; border: 0; background: var(--glass); color: inherit; }
+
+    .categories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+    .cat { background: var(--card); padding: 12px; border-radius: 12px; display: flex; align-items: center; gap: 12px; transition: transform 0.3s ease; }
+    .cat:hover { transform: translateY(-5px); }
+    .cat img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+    .cat h4 { margin: 0; font-size: 16px; color: var(--text); }
+    .cat p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 22px; }
+    .card { background: var(--card); padding: 16px; border-radius: 12px; box-shadow: 0 6px 20px rgba(2, 6, 23, 0.45); transition: transform 0.18s ease, background 0.4s ease, color 0.4s ease; color: var(--text); }
+    .card:hover { transform: translateY(-6px); }
+    .card img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; }
+    .card h3 { margin: 12px 0 6px 0; color: var(--text); }
+    .card p { margin: 0; color: var(--muted); }
+
+    .steps { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-top: 40px; position: relative; }
+    .step { flex: 1; background: var(--card); padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 6px 20px rgba(2, 6, 23, 0.45); position: relative; animation: float 3s ease-in-out infinite; color: var(--text); }
+    .step:nth-child(2) { animation-delay: 0.5s; }
+    .step:nth-child(3) { animation-delay: 1s; }
+    .step h3 { margin: 10px 0; color: var(--accent2); }
+    .step p { color: var(--muted); }
+
+    .arrow { width: 80px; height: 4px; background: linear-gradient(90deg, var(--accent1), var(--accent2)); position: relative; top: 50%; transform: translateY(-50%); animation: flow 2s infinite linear; border-radius: 2px; }
+    .arrow::after { content: ''; position: absolute; right: 0; top: -6px; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 10px solid var(--accent2); }
+
+    @keyframes flow { 0% { opacity: 0.2; transform: translateY(-50%) scaleX(0.5); } 50% { opacity: 1; transform: translateY(-50%) scaleX(1); } 100% { opacity: 0.2; transform: translateY(-50%) scaleX(0.5); } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    /* === Customer Reviews Section === */
+    #testimonials {
+      margin-top: 60px;
+      text-align: center;
+    }
+    .testimonial-container {
+      position: relative;
+      max-width: 700px;
+      margin: 30px auto;
+      overflow: hidden;
+    }
+    .testimonial-card {
+      background: var(--card);
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(2,6,23,0.5);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      opacity: 0;
+      transform: translateX(50px);
+      color: var(--text);
+      position: absolute;
+      width: 100%;
+    }
+    .testimonial-card.active {
+      opacity: 1;
+      transform: translateX(0);
+      position: relative;
+    }
+    .testimonial-card img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent2);
+      margin-bottom: 12px;
+    }
+    .testimonial-card p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .testimonial-card h4 {
+      margin: 5px 0 3px;
+      color: var(--accent2);
+    }
+    .testimonial-card span {
+      color: gold;
+      font-weight: bold;
+    }
+       .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    .modal.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+    .modal-content {
+      background: var(--card);
+      padding: 30px;
+      border-radius: 16px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .modal-content h3 { color: var(--accent2); margin-bottom: 20px; }
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: none;
+      background: var(--glass);
+      color: var(--text);
+    }
+    .modal-content button {
+      width: 100%;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+    }
+    .modal-content button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(255,255,255,0.2);
+    }
+    .close-modal {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    footer { margin-top: 40px; padding: 22px 0; color: var(--muted); text-align: center; }
+
+  /* ================= RESPONSIVE DESIGN ================= */
+
+/* Large Tablets */
+@media (max-width: 1024px) {
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .steps {
+    flex-direction: column;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+
+  .nav {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav a {
+    margin: 6px;
+  }
+
+  .hero h2 {
+    font-size: 26px;
+  }
+
+  .hero-card {
+    padding: 20px;
+  }
+
+  .search {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search input,
+  .search select,
+  .search button {
+    width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .categories {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+
+  .container {
+    padding: 16px;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .brand h1 {
+    font-size: 16px;
+  }
+
+  .hero h2 {
+    font-size: 22px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .testimonial-card {
+    padding: 18px;
+  }
+
+  .modal-content {
+    width: 90%;
+  }
+img {
+  max-width: 100%;
+  height: auto;
+}
+}
+  </style>
+</head>
+<body data-theme="dark">
+  <div class="container">
+    <header>
+      <div class="nav">
+        <div class="brand">
+          <div class="logo">W</div>
+          <div>
+            <h1>WorkEase</h1>
+            <div class="muted" style="font-size:12px">Home services — trusted pros at your doorstep</div>
+          </div>
+        </div>
+
+        <nav>
+          <a href="#services">Services</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#testimonials">Reviews</a>
+          <a href="about.html">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="cta">
+          <button class="ghost" id="themeToggle">🌗</button>
+          <button class="btn" id="loginBtn">Login/Sign-in</button>
+                  
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-card">
+          <h2>Fast, Reliable Home Services</h2>
+          <p>From cleaning to salon to repairs — everything at your doorstep!</p>
+          <div class="search">
+            <input id="query" placeholder="What do you need?" />
+            <select id="location">
+              <option>Detecting location...</option>
+            </select>
+            <button class="btn" id="detectLocationBtn">Detect Location</button>
+            <button class="btn" id="searchBtn">Search</button>
+          </div>
+
+          <div class="categories" style="margin-top:16px">
+            <div class="cat"><img src="./photos/cleaning.jpg" alt="Cleaning"><div><h4>Home Cleaning</h4><p>Deep cleaning & sanitization</p></div></div>
+            <div class="cat"><img src="./photos/salon-spa.jpg" alt="Salon"><div><h4>Salon & Spa</h4><p>Beauty & grooming at home</p></div></div>
+            <div class="cat"><img src="./photos/electrician.jpg" alt="Electrical"><div><h4>Electrical & Plumbing</h4><p>Repairs & installations</p></div></div>
+          </div>
+        </div>
+        <aside>
+          <div style="border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(2,6,23,0.6)">
+            <img src="./photos/hero.jpg" alt="home services" style="width:100%;height:420px;object-fit:cover">
+          </div>
+        </aside>
+      </section>
+
+      <section id="services">
+        <h2 style="margin-top:28px">Popular Services</h2>
+        <div class="grid">
+          <div class="card"><img src="./photos/cleaning.jpg" alt="Home Cleaning"><h3>Full Home Cleaning</h3><p class="muted">Starts at ₹3,499 • 4 hrs</p><div class="price-row"><span class="muted">4.8 ★ (2.1k) </span>
+            <a href="service-detail.html" class="btn">Book</a></div></div>
+          <div class="card"><img src="./photos/ac-repair.jpg" alt="AC Repair"><h3>AC Repair & Servicing</h3><p class="muted">Starts at ₹1,499 • 2 hrs</p><div class="price-row"><span class="muted">4.6 ★ (1.3k)</span>
+            <a href="service-detail.html" class="btn">Book</a></div></div>
+          <div class="card"><img src="./photos/mens-salon.jpg" alt="Men's Salon"><h3>Men's Salon at Home</h3><p class="muted">Starts at ₹899 • Haircut & styling</p><div class="price-row"><span class="muted">4.7 ★ (980)</span>
+            <a href="service-detail.html" class="btn">Book</a></div></div>
+        </div>
+      </section>
+
+      <section id="how-it-works">
+        <h2 style="margin-top:40px;text-align:center">How It Works</h2>
+        <div class="steps">
+          <div class="step">
+            <h3>1. Choose Your Service</h3>
+            <p>Select the service you need from cleaning, salon, plumbing, and more.</p>
+          </div>
+          <div class="arrow"></div>
+          <div class="step">
+            <h3>2. Pick a Time Slot</h3>
+            <p>Schedule a convenient time for our professional to visit your home.</p>
+          </div>
+          <div class="arrow"></div>
+          <div class="step">
+            <h3>3. Relax & Enjoy</h3>
+            <p>Our verified expert arrives on time and completes the job to perfection.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 🌟 New Customer Reviews Section -->
+      <section id="testimonials">
+        <h2 style="margin-top:50px;text-align:center;">What Our Customers Say</h2>
+        <div class="testimonial-container">
+          <div class="testimonial-card active">
+            <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Riya Sharma">
+            <p>“WorkEase made my life easier! My house sparkles after every cleaning.”</p>
+            <h4>Riya Sharma</h4>
+            <span>⭐ 5.0</span>
+          </div>
+          <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Arjun Patel">
+            <p>“Fast and reliable AC repair — the technician was professional and polite.”</p>
+            <h4>Arjun Patel</h4>
+            <span>⭐ 4.8</span>
+          </div>
+          <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/women/50.jpg" alt="Neha Singh">
+            <p>“Salon at home service was excellent! Great experience overall.”</p>
+            <h4>Neha Singh</h4>
+            <span>⭐ 4.9</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2 style="margin-top:28px; font-weight: bold;">Contact Us</h2>
+        <p class="muted">Email: support@workease.com | Phone: +91 85768 56228</p>
+      </section>
+
+
+    </main>
+
+    <footer>© 2025 WorkEase — All rights reserved.</footer>
+  </div>
+  <div class="modal" id="workerModal">
+    <div class="modal-content">
+      <h3>👷 Worker Login / Signup</h3>
+      <input type="text" id="workerName" placeholder="Full Name" required />
+      <input type="email" id="workerEmail" placeholder="Email" required />
+      <input type="password" id="workerPass" placeholder="Password" required />
+      <button id="workerSubmit">Continue</button>
+      <button class="close-modal" id="closeModal">Cancel</button>
+    </div>
+  </div>
+  <script>
+    
+    const themeBtn = document.getElementById('themeToggle');
+    const body = document.body;
+    function applyTheme(t) {
+      if (t === 'light') body.setAttribute('data-theme', 'light');
+      else body.setAttribute('data-theme', 'dark');
+      localStorage.setItem('we_theme', t);
+    }
+    const saved = localStorage.getItem('we_theme') || 'dark';
+    applyTheme(saved);
+    themeBtn.addEventListener('click', () => {
+      const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+      document.querySelectorAll('body, .card, .hero-card, h2, h3, h4').forEach(el => {
+        el.style.transition = 'color 0.4s ease, background 0.4s ease';
+      });
+    });
+
+    // Live location detection
+    async function detectLocation() {
+      if (!navigator.geolocation) {
+        alert('Geolocation not supported by your browser.');
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        try {
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+          const data = await response.json();
+          const city = data.address.city || data.address.town || data.address.state || 'your area';
+          document.getElementById('location').innerHTML = `<option selected>${city}</option>`;
+          const msg = document.createElement('div');
+          msg.textContent = `📍 Showing services near you: ${city}`;
+          msg.style.cssText = 'background:var(--accent2);color:#fff;padding:10px;border-radius:8px;text-align:center;margin:10px 0;font-weight:600;';
+          document.querySelector('.hero-card').prepend(msg);
+        } catch (err) {
+          console.error('Error fetching city:', err);
+        }
+      });
+    }
+
+    document.getElementById('detectLocationBtn').addEventListener('click', detectLocation);
+    window.addEventListener('load', detectLocation);
+
+    // Redirect 'Book a Pro' button to book.html
+    document.getElementById('bookNow').addEventListener('click', () => {
+      window.location.href = 'book.html';
+    });
+
+    // ⭐ Customer Testimonials Carousel
+    let currentTestimonial = 0;
+    const testimonials = document.querySelectorAll('.testimonial-card');
+    function showTestimonial(index) {
+      testimonials.forEach((card, i) => {
+        card.classList.remove('active');
+        if (i === index) card.classList.add('active');
+      });
+    }
+    setInterval(() => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    }, 5000);
+    // ✅ Contact form message
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert("✅ Thank you! We'll get back to you shortly.");
+        e.target.reset();
+    });
+
+// ✅ Animated counters
+    const counters = document.querySelectorAll('.count');
+    const speed = 100;
+
+    const animateCounters = () => {
+        counters.forEach(counter => {
+            const update = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = Math.ceil(target / speed);
+                if (count < target) {
+                    counter.innerText = count + increment;
+                    setTimeout(update, 25);
+                } else {
+                    counter.innerText = target.toLocaleString() + "+";
+                }
+            };
+            update();
+        });
+    };
+
+// Trigger animation when visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                observer.disconnect();
+            }
+        });
+    }, { threshold: 0.5 });
+    observer.observe(document.querySelector('.counters'));
+     const modal = document.getElementById('workerModal');
+    const workerBtn = document.getElementById('workerLogin');
+    const closeBtn = document.getElementById('closeModal');
+    const submitBtn = document.getElementById('workerSubmit');
+
+    workerBtn.onclick = () => modal.classList.add('active');
+    closeBtn.onclick = () => modal.classList.remove('active');
+    window.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); }
+
+    submitBtn.onclick = () => {
+      const name = document.getElementById('workerName').value;
+      const email = document.getElementById('workerEmail').value;
+      if (name && email) {
+        alert(`👷 Welcome, ${name}! Your worker profile has been created.`);
+        modal.classList.remove('active');
+      } else {
+        alert("Please fill in all fields!");
+      }
+    };
+  </script>
+  <script src="app.js"></script>
+  <script src="auth-ui.js"></script>
+
+  <script>
+    const navBtn = document.getElementById("loginBtn");
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+    if(navBtn){
+      if(token){
+        navBtn.innerText = user.name || "My Profile";
+       navBtn.onclick = ()=>location.href="profile.html";
+      } else {
+        navBtn.onclick = ()=>location.href="login.html";
+      }
+    }
+  </script>
+
+
+
+</body>
+</html>

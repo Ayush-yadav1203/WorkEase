@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a Pro — WorkEase</title>
+  <style>
+    :root {
+      --bg: #0f1724;
+      --text: #e6eef6;
+      --card: #0b1220;
+      --muted: #9aa4b2;
+      --accent1: #6ee7b7;
+      --accent2: #60a5fa;
+      --accent3: #8b5cf6;
+    }
+    [data-theme="light"] {
+      --bg: #f6f9fc;
+      --text: #1a1a1a;
+      --card: #ffffff;
+      --muted: #4a5568;
+      --accent1: #06b6d4;
+      --accent2: #3b82f6;
+      --accent3: #a855f7;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(120deg, var(--bg), #071026);
+      color: var(--text);
+      transition: background 0.4s ease, color 0.4s ease;
+      position: relative;
+    }
+
+    /* Dynamic background blobs */
+    .blob {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.5;
+      z-index: -1;
+      animation: floatBlobs 15s infinite ease-in-out;
+      transition: transform 0.4s ease;
+    }
+    .blob1 { background: var(--accent1); top: 10%; left: 5%; animation-delay: 0s; }
+    .blob2 { background: var(--accent2); bottom: 15%; right: 10%; animation-delay: 3s; }
+    .blob3 { background: var(--accent3); top: 40%; right: 30%; animation-delay: 6s; }
+
+    @keyframes floatBlobs {
+      0%,100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.1); }
+    }
+
+    .booking-card {
+      background: rgba(11, 18, 32, 0.7);
+      backdrop-filter: blur(16px);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      padding: 28px;
+      width: 420px;
+      color: var(--text);
+      z-index: 10;
+    }
+    [data-theme="light"] .booking-card {
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--accent2);
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--muted);
+      background: transparent;
+      color: var(--text);
+      margin-top: 6px;
+      font-size: 14px;
+      backdrop-filter: blur(6px);
+    }
+    input:focus, select:focus {
+      border-color: var(--accent2);
+      outline: none;
+    }
+    .btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent1));
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: 1px solid var(--muted);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+    .modal-content {
+      background: var(--card);
+      padding: 24px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .modal-content h3 {
+      color: var(--accent1);
+      margin-bottom: 10px;
+    }
+
+    @media(max-width:600px){
+      .booking-card { width: 90%; }
+      .blob { width: 250px; height: 250px; }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+
+  <button class="theme-toggle" id="themeToggle">🌗</button>
+
+  <div class="booking-card">
+    <h2>Book a Pro</h2>
+    <form id="bookingForm">
+      <label for="service">Select Service</label>
+      <select id="service" required></select>
+
+      <label for="date">Preferred Date</label>
+      <input type="date" id="date" required>
+
+      <label for="time">Preferred Time</label>
+      <input type="time" id="time" required>
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="Enter your name" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" required>
+
+      <button type="submit" class="btn">Confirm Booking</button>
+    </form>
+  </div>
+
+  <div class="modal" id="confirmationModal">
+    <div class="modal-content">
+      <h3>🎉 Booking Confirmed!</h3>
+      <p id="summary"></p>
+      <button class="btn" onclick="closeModal()">Done</button>
+    </div>
+  </div>
+
+  <script>
+    // Theme Handling
+    const themeBtn = document.getElementById('themeToggle');
+    const body = document.body;
+    const savedTheme = localStorage.getItem('we_theme') || 'dark';
+    body.setAttribute('data-theme', savedTheme);
+    themeBtn.addEventListener('click', () => {
+      const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('we_theme', newTheme);
+    });
+
+    // Services List
+    const services = [
+      "Home Cleaning",
+      "AC Repair",
+      "Salon & Spa",
+      "Plumbing",
+      "Painting",
+      "Electrician On-Demand"
+    ];
+    const serviceSelect = document.getElementById('service');
+    services.forEach(s => {
+      const opt = document.createElement('option');
+      opt.textContent = s;
+      serviceSelect.appendChild(opt);
+    });
+
+    // Booking Form
+    const bookingForm = document.getElementById('bookingForm');
+    const modal = document.getElementById('confirmationModal');
+    const summary = document.getElementById('summary');
+
+    bookingForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const service = serviceSelect.value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+
+      summary.innerHTML = `
+        <strong>${name}</strong>, your <strong>${service}</strong> booking is confirmed for 
+        <strong>${date}</strong> at <strong>${time}</strong>.<br><br>
+        Our professional will contact you at <strong>${phone}</strong>.
+      `;
+      modal.style.display = 'flex';
+      bookingForm.reset();
+    });
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    // 🌌 Parallax Blob Motion
+    const blobs = document.querySelectorAll('.blob');
+    document.addEventListener('mousemove', e => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 40; 
+      const y = (e.clientY / window.innerHeight - 0.5) * 40;
+      blobs.forEach((blob, i) => {
+        const offset = (i + 1) * 8;
+        blob.style.transform = `translate(${x / offset}px, ${y / offset}px)`;
+      });
+    });
+  </script>
+  <script src="app.js"></script>
+
+</body>
+</html>

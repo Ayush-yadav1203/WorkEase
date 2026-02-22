@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WorkEase — Sign Up</title>
+  <style>
+    :root {
+      --bg: #0f1724;
+      --text: #e6eef6;
+      --card: #0b1220;
+      --muted: #9aa4b2;
+      --accent1: #6ee7b7;
+      --accent2: #60a5fa;
+      --glass: rgba(255,255,255,0.04);
+    }
+    [data-theme="light"] {
+      --bg: #f6f9fc;
+      --text: #1a1a1a;
+      --card: #ffffff;
+      --muted: #4a5568;
+      --accent1: #06b6d4;
+      --accent2: #3b82f6;
+      --glass: rgba(15,23,42,0.03);
+    }
+    body {
+      font-family: Inter, system-ui, Arial;
+      background: linear-gradient(180deg, var(--bg), #071026);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    .card {
+      background: var(--card);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      text-align: center;
+      width: 340px;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 28px;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    h2 { margin: 8px 0 20px; color: var(--accent2); }
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: var(--glass);
+      margin-bottom: 16px;
+      color: var(--text);
+      font-size: 15px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent1));
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    button:hover { transform: translateY(-3px); }
+    .muted { color: var(--muted); margin-top: 14px; font-size: 14px; }
+    a { color: var(--accent1); text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
+    #themeToggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <button id="themeToggle">🌗</button>
+  <div class="card">
+    <div class="logo">WorkEase</div>
+    <h2>Create Account 🆕</h2>
+    <input type="text" id="signupName" placeholder="Full Name" required />
+    <input type="email" id="signupEmail" placeholder="Email" required />
+    <input type="password" id="signupPass" placeholder="Password" required />
+    <button id="signupBtn">Sign Up</button>
+    <div class="muted">Already have an account? <a href="login.html">Login</a></div>
+    <div class="muted" style="margin-top:8px;"><a href="index.html">← Back to Home</a></div>
+  </div>
+
+ <script>
+const themeBtn = document.getElementById('themeToggle');
+const body = document.body;
+const saved = localStorage.getItem('we_theme') || 'dark';
+body.setAttribute('data-theme', saved);
+
+themeBtn.onclick = () => {
+  const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('we_theme', newTheme);
+};
+
+document.getElementById('signupBtn').addEventListener('click', async () => {
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('signupPass').value.trim();
+
+  if (!name || !email || !password) {
+    alert("⚠️ Please fill all fields!");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5001/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, email, password })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("🎉 Signup successful! Please login.");
+      window.location.href = "login.html";
+    } else {
+      alert(data.message || "Signup failed");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Server error");
+  }
+});
+</script>
+
+
+</body>
+</html>

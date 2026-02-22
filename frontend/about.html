@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — WorkEase</title>
+  <meta name="description" content="Learn more about WorkEase — India's trusted home service platform" />
+  <style>
+    :root {
+      --bg: #0f1724;
+      --text: #e6eef6;
+      --card: #0b1220;
+      --muted: #9aa4b2;
+      --accent1: #6ee7b7;
+      --accent2: #60a5fa;
+      --glass: rgba(255, 255, 255, 0.04);
+    }
+    [data-theme="light"] {
+      --bg: #f6f9fc;
+      --text: #1a1a1a;
+      --card: #ffffff;
+      --muted: #4a5568;
+      --accent1: #06b6d4;
+      --accent2: #3b82f6;
+      --glass: rgba(15, 23, 42, 0.03);
+    }
+
+    * { box-sizing: border-box; transition: background 0.4s ease, color 0.4s ease; }
+    body {
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg), #071026);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      padding: 20px 40px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent1));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+    }
+    header .logo { font-weight: 700; font-size: 22px; letter-spacing: 1px; }
+    header nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 14px;
+      font-weight: 500;
+    }
+    header nav a:hover { text-decoration: underline; }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px 60px;
+      background: linear-gradient(180deg, var(--card), transparent);
+    }
+    .hero h1 {
+      font-size: 42px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent1));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+    .hero p { color: var(--muted); font-size: 18px; max-width: 700px; margin: 0 auto; }
+
+    .about-section {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .about-section img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .about-text h2 {
+      color: var(--accent2);
+      margin-bottom: 15px;
+    }
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .mission {
+      background: var(--card);
+      padding: 60px 20px;
+      text-align: center;
+      border-radius: 16px;
+      max-width: 1000px;
+      margin: 50px auto;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    }
+    .mission h2 {
+      color: var(--accent2);
+      margin-bottom: 15px;
+    }
+    .mission p {
+      color: var(--muted);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .team {
+      max-width: 1100px;
+      margin: 70px auto;
+      text-align: center;
+    }
+    .team h2 {
+      color: var(--accent2);
+      margin-bottom: 30px;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    .team-member {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 6px 20px rgba(2,6,23,0.45);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .team-member:hover { transform: translateY(-6px); box-shadow: 0 12px 25px rgba(0,0,0,0.6); }
+    .team-member img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent2);
+      margin-bottom: 12px;
+    }
+    .team-member h4 { margin: 10px 0 5px; color: var(--text); }
+    .team-member p { color: var(--muted); margin: 0; }
+
+    .linkedin-btn {
+      display: inline-flex;
+      width: 140px;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent1));
+      color: #fff;
+      padding: 8px 14px;
+      justify-content: center;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 10px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .linkedin-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(255,255,255,0.2);
+    }
+    .linkedin-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 50px;
+    }
+
+    @media(max-width: 900px) {
+      .about-section { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 34px; }
+    }
+  </style>
+</head>
+
+<body data-theme="dark">
+  <header>
+    <div class="logo">WorkEase</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html" style="font-weight:bold;">About</a>
+      <a href="#team">Team</a>
+      <a href="mailto:support@workease.com">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>About WorkEase</h1>
+    <p>Making your everyday life simpler with trusted, verified professionals — anytime, anywhere. WorkEase brings every essential home service right to your doorstep.</p>
+  </section>
+
+  <section class="about-section">
+    <div class="about-text">
+      <h2>Who We Are</h2>
+      <p>WorkEase is India's most reliable home service platform, connecting thousands of users with certified professionals in cleaning, salon, appliance repair, painting, and more.</p>
+      <p>Founded with a mission to simplify urban living, our team ensures every experience is hassle-free, transparent, and affordable.</p>
+      <p>We believe in technology-driven trust — where your comfort and safety come first.</p>
+    </div>
+    <img src="download.jpg" alt="WorkEase Team">
+  </section>
+
+  <section class="mission">
+    <h2>Our Mission</h2>
+    <p>To revolutionize the home service industry by providing accessible, high-quality, and affordable services that people can rely on. We aim to empower professionals with technology and ensure customer satisfaction at every doorstep.</p>
+  </section>
+
+  <section class="team" id="team">
+    <h2>Meet Our Core Team</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="photo.jpg" alt="Ayush Yadav">
+        <h4>Ayush Yadav</h4>
+        <p style="font-weight:bold;">Tech-Lead and Frontend-Developer</p>
+        <p>A B.Tech IT student passionate about design-driven development, teamwork, and building meaningful web solutions that make a difference.</p>
+        <a class="linkedin-btn" href="https://www.linkedin.com/in/ayush-yadav-090505303?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.027-3.059-1.863-3.059-1.864 0-2.149 1.454-2.149 2.957v5.706h-3v-10h2.879v1.367h.041c.401-.757 1.379-1.554 2.84-1.554 3.038 0 3.598 2.001 3.598 4.6v5.587z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+
+      <div class="team-member">
+        <img src="photo2.jpg" alt="Anay Agrawal">
+        <h4>Anay Agrawal</h4>
+        <p style="font-weight: bold;">Frontend-Developer</p>
+        <p>A B.Tech 3rd-year IT student passionate about building modern, responsive, and visually appealing web interfaces. Dedicated to delivering smooth design and exceptional user experiences.</p>
+        <a class="linkedin-btn" href="https://www.linkedin.com/in/anay-agrawal-56162a331?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.027-3.059-1.863-3.059-1.864 0-2.149 1.454-2.149 2.957v5.706h-3v-10h2.879v1.367h.041c.401-.757 1.379-1.554 2.84-1.554 3.038 0 3.598 2.001 3.598 4.6v5.587z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+
+      <div class="team-member">
+        <img src="photo3.jpg" alt="Aniket Gupta">
+        <h4>Aniket Gupta</h4>
+        <p style="font-weight: bold;">Content Development Executive</p>
+        <P>A creative mind behind WorkEase’s digital presence. Focused on crafting compelling content that communicates trust, clarity, and innovation.</P>
+        <a class="linkedin-btn" href="https://www.linkedin.com/in/aniket-gupta-889990297?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.027-3.059-1.863-3.059-1.864 0-2.149 1.454-2.149 2.957v5.706h-3v-10h2.879v1.367h.041c.401-.757 1.379-1.554 2.84-1.554 3.038 0 3.598 2.001 3.598 4.6v5.587z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+
+      <div class="team-member">
+        <img src="photo4.jpg" alt="Animesh Singh">
+        <h4>Animesh Singh</h4>
+        <p style="font-weight: bold;">Backend-Developer</p>
+        <p>Backend Engineer — Dedicated to building scalable server logic and efficient data systems. Turning complex processes into smooth, reliable backend operations.  </p>
+        <a class="linkedin-btn" href="https://www.linkedin.com/in/animesh-singh-371977338?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.027-3.059-1.863-3.059-1.864 0-2.149 1.454-2.149 2.957v5.706h-3v-10h2.879v1.367h.041c.401-.757 1.379-1.554 2.84-1.554 3.038 0 3.598 2.001 3.598 4.6v5.587z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2025 WorkEase — Empowering Home Services with Trust & Technology.</footer>
+
+  <script>
+    const savedTheme = localStorage.getItem('we_theme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+  </script>
+</body>
+</html>
+

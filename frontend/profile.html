@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile — WorkEase</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0f1724;
+  color:#fff;
+}
+
+.container{
+  max-width:900px;
+  margin:40px auto;
+  padding:20px;
+}
+
+.card{
+  background:#1e293b;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+}
+
+h2{
+  margin-top:0;
+}
+
+button{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.logout{
+  background:#ef4444;
+  color:white;
+}
+
+.bookings{
+  margin-top:20px;
+}
+
+.booking-item{
+  background:#334155;
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="card">
+    <h2>👤 My Profile</h2>
+    <p><strong>Name:</strong> <span id="userName"></span></p>
+    <p><strong>Email:</strong> <span id="userEmail"></span></p>
+    <button class="logout" id="logoutBtn">Logout</button>
+  </div>
+
+  <div class="card bookings">
+    <h2>🛠 My Service Requests</h2>
+    <div id="bookingList">Loading...</div>
+  </div>
+
+</div>
+
+<script>
+const token = localStorage.getItem("token");
+const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+if(!token){
+  window.location.href = "login.html";
+}
+
+document.getElementById("userName").innerText = user.name || "";
+document.getElementById("userEmail").innerText = user.email || "";
+
+// Fetch bookings
+async function fetchBookings(){
+  try{
+    const res = await fetch("http://localhost:5001/api/bookings",{
+      headers:{
+        "Authorization": "Bearer " + token
+      }
+    });
+
+    const data = await res.json();
+
+    const list = document.getElementById("bookingList");
+    list.innerHTML = "";
+
+    if(data.length === 0){
+      list.innerHTML = "No service requests yet.";
+      return;
+    }
+
+    data.forEach(b=>{
+      const div = document.createElement("div");
+      div.className = "booking-item";
+      div.innerHTML = `
+        <strong>Service:</strong> ${b.service} <br>
+        <strong>Date:</strong> ${b.date} <br>
+        <strong>Phone:</strong> ${b.phone}
+      `;
+      list.appendChild(div);
+    });
+
+  }catch(err){
+    console.log(err);
+  }
+}
+
+fetchBookings();
+
+// Logout
+document.getElementById("logoutBtn").onclick = ()=>{
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  window.location.href = "index.html";
+};
+</script>
+
+</body>
+</html>
