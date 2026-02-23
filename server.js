@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const path = require("path");
 
 const User = require("./models/User");
 const Booking = require("./models/Booking");
@@ -12,30 +13,31 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-// ================= JWT MIDDLEWARE =================
-const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization;
 
-  if (!token) {
-    return res.status(401).send("Access denied. No token.");
+/* ================= JWT MIDDLEWARE ================= */
+const verifyToken = (req, res, next) => {
+  const header = req.headers.authorization;
+
+  if (!header) {
+    return res.status(401).json({ message: "Access denied. No token." });
   }
 
   try {
-    const decoded = jwt.verify(token.split(" ")[1], process.env.JWT_SECRET);
+    const token = header.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (err) {
-    res.status(400).send("Invalid token");
+    return res.status(400).json({ message: "Invalid token" });
   }
 };
 
-
-// ================= MongoDB =================
+/* ================= MongoDB ================= */
 mongoose.connect(process.env.MONGO_URI)
-.then(()=>console.log("MongoDB Connected"))
-.catch(err=>console.log(err));
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log("Mongo Error:", err));
 
-// ================= SIGNUP =================
+/* ================= AUTH ROUTES ================= */
 app.post("/api/auth/signup", async (req, res) => {
   try {
     let { name, email, password } = req.body;
@@ -47,18 +49,13 @@ app.post("/api/auth/signup", async (req, res) => {
     email = email.toLowerCase().trim();
 
     const existingUser = await User.findOne({ email });
-
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
     const hash = await bcrypt.hash(password, 10);
 
-    await User.create({
-      name,
-      email,
-      password: hash
-    });
+    await User.create({ name, email, password: hash });
 
     res.status(201).json({ message: "Signup successful" });
 
@@ -67,12 +64,10 @@ app.post("/api/auth/signup", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-// ================= LOGIN =================
+
 app.post("/api/auth/login", async (req, res) => {
   try {
     let { email, password } = req.body;
-
-    console.log("Request body:", req.body);
 
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password required" });
@@ -81,17 +76,11 @@ app.post("/api/auth/login", async (req, res) => {
     email = email.toLowerCase().trim();
 
     const user = await User.findOne({ email });
-
-    console.log("User from DB:", user);
-
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
-    console.log("Password match:", isMatch);
-
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid password" });
     }
@@ -112,40 +101,67 @@ app.post("/api/auth/login", async (req, res) => {
     });
 
   } catch (err) {
-    console.log("LOGIN ERROR:", err);
+    console.log("Login error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
-// ================= BOOKINGS =================
-app.post("/api/bookings", verifyToken, async(req,res)=>{
-const { name, phone, service, date } = req.body;
 
-if(!name || !phone || !service || !date){
-  return res.status(400).send("All booking fields required");
-}
-
- await Booking.create(req.body);
- res.send("Booking saved");
+/* ================= SERVICES ================= */
+app.get("/api/services", (req, res) => {
+  res.json([
+    "Home Cleaning",
+    "AC Repair",
+    "Salon & Spa",
+    "Plumbing",
+    "Painting",
+    "Electrician"
+  ]);
 });
 
-// ================= SERVICES =================
-app.get("/api/services",(req,res)=>{
- res.json([
-   "Home Cleaning",
-   "AC Repair",
-   "Salon & Spa",
-   "Plumbing",
-   "Painting",
-   "Electrician"
- ]);
+/* ================= BOOKINGS ================= */
+app.post("/api/bookings", verifyToken, async (req, res) => {
+  try {
+    const { name, phone, service, date } = req.body;
+
+    if (!name || !phone || !service || !date) {
+      return res.status(400).json({ message: "All booking fields required" });
+    }
+
+    const booking = await Booking.create({
+      name,
+      phone,
+      service,
+      date,
+      userId: req.user.id
+    });
+
+    res.status(201).json({ message: "Booking saved", booking });
+
+  } catch (err) {
+    console.log("Booking error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
-app.get("/api/bookings", verifyToken, async (req,res)=>{
-  const bookings = await Booking.find();
-  res.json(bookings);
+app.get("/api/bookings", verifyToken, async (req, res) => {
+  try {
+    const bookings = await Booking.find({ userId: req.user.id });
+    res.json(bookings);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
+
+/* ================= SERVE FRONTEND ================= */
+app.use(express.static(path.join(__dirname, "frontend")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend/index.html"));
+});
+
+/* ================= START SERVER ================= */
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
- console.log("Backend running on " + PORT);
+  console.log("Backend running on " + PORT);
 });
