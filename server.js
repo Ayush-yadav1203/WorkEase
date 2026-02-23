@@ -119,6 +119,9 @@ app.get("/api/services", (req, res) => {
 });
 
 /* ================= BOOKINGS ================= */
+/* ================= BOOKINGS ================= */
+
+// Create booking
 app.post("/api/bookings", verifyToken, async (req, res) => {
   try {
     const { name, phone, service, date } = req.body;
@@ -128,14 +131,17 @@ app.post("/api/bookings", verifyToken, async (req, res) => {
     }
 
     const booking = await Booking.create({
+      userId: req.user.id,
       name,
       phone,
       service,
-      date,
-      userId: req.user.id
+      date
     });
 
-    res.status(201).json({ message: "Booking saved", booking });
+    res.status(201).json({
+      message: "Booking saved successfully",
+      booking
+    });
 
   } catch (err) {
     console.log("Booking error:", err);
@@ -143,9 +149,12 @@ app.post("/api/bookings", verifyToken, async (req, res) => {
   }
 });
 
+// Get logged-in user's bookings
 app.get("/api/bookings", verifyToken, async (req, res) => {
   try {
-    const bookings = await Booking.find({ userId: req.user.id });
+    const bookings = await Booking.find({ userId: req.user.id })
+      .sort({ createdAt: -1 });
+
     res.json(bookings);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
@@ -165,3 +174,4 @@ const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log("Backend running on " + PORT);
 });
+
