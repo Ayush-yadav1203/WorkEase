@@ -367,17 +367,43 @@ img {
         </aside>
       </section>
 
-      <section id="services">
-        <h2 style="margin-top:28px">Popular Services</h2>
-        <div class="grid">
-          <div class="card"><img src="./photos/cleaning.jpg" alt="Home Cleaning"><h3>Full Home Cleaning</h3><p class="muted">Starts at ₹3,499 • 4 hrs</p><div class="price-row"><span class="muted">4.8 ★ (2.1k) </span>
-            <a href="service-detail.html" class="btn">Book</a></div></div>
-          <div class="card"><img src="./photos/ac-repair.jpg" alt="AC Repair"><h3>AC Repair & Servicing</h3><p class="muted">Starts at ₹1,499 • 2 hrs</p><div class="price-row"><span class="muted">4.6 ★ (1.3k)</span>
-            <a href="service-detail.html" class="btn">Book</a></div></div>
-          <div class="card"><img src="./photos/mens-salon.jpg" alt="Men's Salon"><h3>Men's Salon at Home</h3><p class="muted">Starts at ₹899 • Haircut & styling</p><div class="price-row"><span class="muted">4.7 ★ (980)</span>
-            <a href="service-detail.html" class="btn">Book</a></div></div>
-        </div>
-      </section>
+    <section id="services">
+<h2 style="margin-top:28px">Popular Services</h2>
+
+<div class="grid">
+
+<div class="card">
+<img src="./photos/cleaning.jpg" alt="Home Cleaning">
+<h3>Full Home Cleaning</h3>
+<p class="muted">Starts at ₹3,499 • 4 hrs</p>
+<div class="price-row">
+<span class="muted">4.8 ★ (2.1k)</span>
+<button class="btn bookBtn">Book</button>
+</div>
+</div>
+
+<div class="card">
+<img src="./photos/ac-repair.jpg" alt="AC Repair">
+<h3>AC Repair & Servicing</h3>
+<p class="muted">Starts at ₹1,499 • 2 hrs</p>
+<div class="price-row">
+<span class="muted">4.6 ★ (1.3k)</span>
+<button class="btn bookBtn">Book</button>
+</div>
+</div>
+
+<div class="card">
+<img src="./photos/mens-salon.jpg" alt="Men's Salon">
+<h3>Men's Salon at Home</h3>
+<p class="muted">Starts at ₹899 • Haircut & styling</p>
+<div class="price-row">
+<span class="muted">4.7 ★ (980)</span>
+<button class="btn bookBtn">Book</button>
+</div>
+</div>
+
+</div>
+</section>
 
       <section id="how-it-works">
         <h2 style="margin-top:40px;text-align:center">How It Works</h2>
@@ -489,10 +515,7 @@ img {
     document.getElementById('detectLocationBtn').addEventListener('click', detectLocation);
     window.addEventListener('load', detectLocation);
 
-    // Redirect 'Book a Pro' button to book.html
-    document.getElementById('bookNow').addEventListener('click', () => {
-      window.location.href = 'book.html';
-    });
+  
 
     // ⭐ Customer Testimonials Carousel
     let currentTestimonial = 0;
@@ -568,22 +591,43 @@ img {
   <script src="app.js"></script>
   <script src="auth-ui.js"></script>
 
-  <script>
-    const navBtn = document.getElementById("loginBtn");
-    const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
+<script>
 
-    if(navBtn){
-      if(token){
-        navBtn.innerText = user.name || "My Profile";
-       navBtn.onclick = ()=>location.href="profile.html";
-      } else {
-        navBtn.onclick = ()=>location.href="login.html";
-      }
+document.addEventListener("DOMContentLoaded", () => {
+
+  const navBtn = document.getElementById("loginBtn");
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  if(navBtn){
+    if(token){
+      navBtn.innerText = user.name || "My Profile";
+      navBtn.onclick = () => location.href = "profile.html";
+    }else{
+      navBtn.onclick = () => location.href = "login.html";
     }
-  </script>
+  }
 
+  const bookBtns = document.querySelectorAll(".bookBtn");
 
+  bookBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+      const token = localStorage.getItem("token");
+
+      if(token){
+        window.location.href = "service-detail.html";
+      }else{
+        alert("Please login first to book a service");
+        window.location.href = "login.html";
+      }
+
+    });
+  });
+
+});
+
+</script>
 
 </body>
 </html>
