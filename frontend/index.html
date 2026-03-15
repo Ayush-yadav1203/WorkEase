@@ -335,6 +335,7 @@ img {
         <div class="cta">
           <button class="ghost" id="themeToggle">🌗</button>
           <button class="btn" id="loginBtn">Login/Sign-in</button>
+           <button class="btn" id="workerLogin">Worker Login</button>
                   
         </div>
       </div>
@@ -531,11 +532,15 @@ img {
       showTestimonial(currentTestimonial);
     }, 5000);
     // ✅ Contact form message
-    document.getElementById('contactForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert("✅ Thank you! We'll get back to you shortly.");
-        e.target.reset();
-    });
+  const contactForm = document.getElementById("contactForm");
+
+if(contactForm){
+  contactForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    alert("✅ Thank you! We'll get back to you shortly.");
+    contactForm.reset();
+  });
+}
 
 // ✅ Animated counters
     const counters = document.querySelectorAll('.count');
@@ -567,14 +572,23 @@ img {
             }
         });
     }, { threshold: 0.5 });
-    observer.observe(document.querySelector('.counters'));
+    const counterSection = document.querySelector(".counters");
+
+if(counterSection){
+  observer.observe(counterSection);
+}
      const modal = document.getElementById('workerModal');
     const workerBtn = document.getElementById('workerLogin');
     const closeBtn = document.getElementById('closeModal');
     const submitBtn = document.getElementById('workerSubmit');
 
-    workerBtn.onclick = () => modal.classList.add('active');
-    closeBtn.onclick = () => modal.classList.remove('active');
+  if(workerBtn){
+  workerBtn.onclick = () => modal.classList.add("active");
+}
+
+if(closeBtn){
+  closeBtn.onclick = () => modal.classList.remove("active");
+}
     window.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); }
 
     submitBtn.onclick = () => {
